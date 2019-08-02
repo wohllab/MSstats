@@ -357,20 +357,20 @@ dataProcess  <-  function(raw,
 	processout <- rbind(processout, c("New input format : made new columns for analysis - okay"))
 	write.table(processout, file=finalfile, row.names=FALSE)
 	
-  
-	## 2016. 08.29 : replace <1 with zero for log2(intensity)
-	if ( length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)) > 0 ) {
-	  
-	  processout <- rbind(processout, c(paste0("** There are ",  
-	                                          length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)), 
-	                                          " intensities which are zero. These intensities are replaced with 1.")))
-	  write.table(processout, file=finalfile, row.names=FALSE)
-	  
-	  message(paste0("** There are ", length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)), 
-	                " intensities which are zero or less than 1. These intensities are replaced with 1."))
-	  
-	  work[!is.na(work$INTENSITY) & work$INTENSITY < 1, 'INTENSITY'] <- 1
-	}
+        #Below is disabled for skyline imputation purpose
+	### 2016. 08.29 : replace <1 with zero for log2(intensity)
+	#if ( length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)) > 0 ) {
+	#  
+	#  processout <- rbind(processout, c(paste0("** There are ",  
+	#                                          length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)), 
+	#                                          " intensities which are zero. These intensities are replaced with 1.")))
+	#  write.table(processout, file=finalfile, row.names=FALSE)
+	#  
+	#  message(paste0("** There are ", length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)), 
+	#                " intensities which are zero or less than 1. These intensities are replaced with 1."))
+	#  
+	#  work[!is.na(work$INTENSITY) & work$INTENSITY < 1, 'INTENSITY'] <- 1
+	#}
 	
 	## log transformation
 	work$ABUNDANCE <- work$INTENSITY
