@@ -241,7 +241,9 @@ SkylinetoMSstatsFormat <- function(input,
             stop('** DetectionQValue column is needed in order to filter out by Qvalue. Please add DectionQValue column in the input.')
             
         } else {
-            
+            print("WE'RE ABOUT TO FILTER BY THE Q VALUE NOW.....")
+            print(DDA)
+            print("Above is value of DDA")
             ## make Q value as numeric
             input$DetectionQValue <- as.numeric(as.character(input$DetectionQValue))
             
