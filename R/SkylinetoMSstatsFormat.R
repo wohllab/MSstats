@@ -233,6 +233,10 @@ SkylinetoMSstatsFormat <- function(input,
     ##############################
     ## 9. DIA : filter by Qvalue
     ##############################
+    print(DDA)
+    print("Above is value of DDA<<<<<<<<<<<<<<")
+    print("Before alleged filtering....")
+    print(sum(input[!is.na(input$DetectionQValue) & input$DetectionQValue > qvalue_cutoff, "Intensity"]))
     
     if (!DDA & filter_with_Qvalue){
         
@@ -242,8 +246,6 @@ SkylinetoMSstatsFormat <- function(input,
             
         } else {
             print("WE'RE ABOUT TO FILTER BY THE Q VALUE NOW.....")
-            print(DDA)
-            print("Above is value of DDA")
             ## make Q value as numeric
             input$DetectionQValue <- as.numeric(as.character(input$DetectionQValue))
             
@@ -254,7 +256,8 @@ SkylinetoMSstatsFormat <- function(input,
                            ' in DetectionQValue are replaced with zero.'))
         }
     }
-    
+    print("After alleged filtering....")
+    print(sum(input[!is.na(input$DetectionQValue) & input$DetectionQValue > qvalue_cutoff, "Intensity"]))
     ##############################
     ## 10. remove featuares with all na or zero
     ## some rows have all zero values across all MS runs. They should be removed.
