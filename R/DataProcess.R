@@ -357,7 +357,7 @@ dataProcess  <-  function(raw,
 	processout <- rbind(processout, c("New input format : made new columns for analysis - okay"))
 	write.table(processout, file=finalfile, row.names=FALSE)
 	
-        Below is disabled for skyline imputation purpose
+        #Below is disabled for skyline imputation purpose
 	## 2016. 08.29 : replace <1 with zero for log2(intensity)
 	if ( length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)) > 0 ) {
 	  
