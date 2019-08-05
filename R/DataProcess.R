@@ -359,18 +359,18 @@ dataProcess  <-  function(raw,
 	
         #Below is disabled for skyline imputation purpose
 	## 2016. 08.29 : replace <1 with zero for log2(intensity)
-	if ( length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)) > 0 ) {
-	  
-	  processout <- rbind(processout, c(paste0("** There are ",  
-	                                          length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)), 
-	                                          " intensities which are zero. These intensities are replaced with 1.")))
-	  write.table(processout, file=finalfile, row.names=FALSE)
-	  
-	  message(paste0("** There are ", length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)), 
-	                " intensities which are zero or less than 1. These intensities are replaced with 1."))
-	  
-	  work[!is.na(work$INTENSITY) & work$INTENSITY < 1, 'INTENSITY'] <- 1
-	}
+	#if ( length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)) > 0 ) {
+	#  
+	#  processout <- rbind(processout, c(paste0("** There are ",  
+	#                                          length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)), 
+	#                                          " intensities which are zero. These intensities are replaced with 1.")))
+	#  write.table(processout, file=finalfile, row.names=FALSE)
+	#  
+	#  message(paste0("** There are ", length(which(!is.na(work$INTENSITY) & work$INTENSITY < 1)), 
+	#                " intensities which are zero or less than 1. These intensities are replaced with 1."))
+	#  
+	#  work[!is.na(work$INTENSITY) & work$INTENSITY < 1, 'INTENSITY'] <- 1
+	#}
 	
 	## log transformation
 	work$ABUNDANCE <- work$INTENSITY
@@ -2151,7 +2151,7 @@ dataProcess  <-  function(raw,
 	
 	### If imputation=TRUE and there is any value for maxQuantileforCensored, apply cutoff for censored missing
 	if ( summaryMethod == "TMP" & MBimpute ) {
-	  
+            print("starting to work to apply cutoff for TMP and MBimpute...")
 	    work$LABEL <- factor(work$LABEL)
 	    label <- nlevels(work$LABEL)==2
 	  
@@ -2194,6 +2194,8 @@ dataProcess  <-  function(raw,
                     print(paste0(c("Let's look at the count of censored.... before...",sum(work$censored))))
 
                     if ( !is.null(censoredInt) & censoredInt == "0" ) {
+                        print("Working on setting censored values......IN THE IF ")
+                        print(work[!is.na(work$INTENSITY) & work$INTENSITY == 1,])
                         work[!is.na(work$INTENSITY) & work$INTENSITY == 1, 'censored'] <- TRUE
                     }
 
@@ -2949,7 +2951,7 @@ resultsAsLists <- function(x, ...) {
           	        if (!is.null(censoredInt)) {
           	            ## 1. censored 
           	            if (censoredInt == "0") {
-          	    
+          	                print("IN CENSORED MBIMPUTE SECTION")
           	                sub[sub$censored == TRUE, 'ABUNDANCE'] <- 0
           	                sub$cen <- ifelse(sub$censored, 0, 1)
                                 print(paste0(c("Let's look at the count of cen.... first MBimpute check...",sum(sub$cen))))
