@@ -2195,6 +2195,7 @@ dataProcess  <-  function(raw,
 
                     if ( !is.null(censoredInt) & censoredInt == "0" ) {
                         print("Working on setting censored values......IN THE IF ")
+                        write.csv(work,"/galaxy-central/msstats_temp_work.csv")
                         print(work[!is.na(work$INTENSITY) & work$INTENSITY == 1,])
                         work[!is.na(work$INTENSITY) & work$INTENSITY == 1, 'censored'] <- TRUE
                     }
