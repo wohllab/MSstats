@@ -2191,11 +2191,13 @@ dataProcess  <-  function(raw,
 
 	            work[!is.na(work$INTENSITY) & 
 	                     work$ABUNDANCE < cutoff.lower, 'censored'] <- TRUE
+                    print(paste0(c("Let's look at the count of censored.... before...",sum(work$censored))))
 
                     if ( !is.null(censoredInt) & censoredInt == "0" ) {
                         work[!is.na(work$INTENSITY) & work$INTENSITY == 1, 'censored'] <- TRUE
                     }
 
+                    print(paste0(c("Let's look at the count of censored.... after1...",sum(work$censored))))
 	            
 	            ## if censoredInt == '0, and cutoff is negative, still zero should becensored
 	            if ( cutoff.lower <= 0 & !is.null(censoredInt) & censoredInt == "0" ) {
@@ -2298,7 +2300,7 @@ dataProcess  <-  function(raw,
 	        }
 	        
 	    } else { ## will MBimpute, but not apply algorithm for cutoff
-	    
+	        print("I'm in the else with no algorithm cutoff!")
 	        if(censoredInt == '0'){
 	            work[work$LABEL == 'L' & !is.na(work$INTENSITY) & work$INTENSITY == 1, 'censored'] <- TRUE
 	            work[work$LABEL == 'L' & !is.na(work$ABUNDANCE) & work$ABUNDANCE <= 0, 'censored'] <- TRUE
@@ -2976,10 +2978,14 @@ resultsAsLists <- function(x, ...) {
           	    if ( MBimpute ) {
           	        if (!is.null(censoredInt)) {
             	        ## 1. censored 
+                            print(paste0(c("Let's look at the count of censored.... before removeFeaturesblock...",sum(sub$censored))))
+
           	            if (censoredInt == "0") {
             	            subtemp <- sub[sub$LABEL == "L" & !is.na(sub$ABUNDANCE) & sub$ABUNDANCE != 0, ]
           	      
                         }
+                        print(paste0(c("Let's look at the count of censored.... after removeFeaturesblock...",sum(subtemp$censored),length(subtemp))))
+
           	    
           	            ### 2. all censored missing
           	            if (censoredInt == "NA") {
@@ -3101,6 +3107,7 @@ resultsAsLists <- function(x, ...) {
     				
     			### check whether we need to impute or not.
     			if (sum(sub$cen == 0) > 0) {
+                            print(paste0(c("Let's look at the count of censored.... start of impute check...",sum(sub$censored))))
     			
     				## 2. put minimum in feature level to NA
     				if (cutoffCensored == "minFeature") {
@@ -3254,6 +3261,8 @@ resultsAsLists <- function(x, ...) {
     					}
     				}
     				
+                                print(paste0(c("Let's look at the count of censored.... before MBimpute...",sum(sub$censored))))
+
     				if (MBimpute) {
     					
     				    if(!label){ ## label-free
