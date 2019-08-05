@@ -2952,7 +2952,8 @@ resultsAsLists <- function(x, ...) {
           	    
           	                sub[sub$censored == TRUE, 'ABUNDANCE'] <- 0
           	                sub$cen <- ifelse(sub$censored, 0, 1)
-          	    
+                                print(paste0(c("Let's look at the count of cen.... first MBimpute check...",sum(sub$cen))))
+
           	            }
           	  
           	            ### 2. all censored missing
@@ -3105,6 +3106,7 @@ resultsAsLists <- function(x, ...) {
     
     			}
     				
+                        print(paste0(c("Let's look at the count of cen.... before start of impute check...",sum(sub$cen))))
     			### check whether we need to impute or not.
     			if (sum(sub$cen == 0) > 0) {
                             print(paste0(c("Let's look at the count of censored.... start of impute check...",sum(sub$censored))))
