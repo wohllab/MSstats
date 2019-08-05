@@ -2177,12 +2177,6 @@ dataProcess  <-  function(raw,
 	    
 	            cutoff.lower <- (log2int.prime.quant[2] - multiplier * iqr) 
 	    
-	            work[!is.na(work$INTENSITY) & 
-	                     work$ABUNDANCE < cutoff.lower, 'censored'] <- TRUE
-                    if ( !is.null(censoredInt) & censoredInt == "0" ) {
-                        work[!is.na(work$INTENSITY) & work$INTENSITY == 1, 'censored'] <- TRUE
-                    }
-
 	            
 	            message(paste('** Log2 intensities under cutoff =', 
 	                          format(cutoff.lower, digits=5), 
@@ -2193,6 +2187,14 @@ dataProcess  <-  function(raw,
 	                                        format(cutoff.lower, digits=5), 
 	                                        ' were considered as censored missing values.')))
 	            write.table(processout, file=finalfile, row.names=FALSE)
+
+
+	            work[!is.na(work$INTENSITY) & 
+	                     work$ABUNDANCE < cutoff.lower, 'censored'] <- TRUE
+                    if ( !is.null(censoredInt) & censoredInt == "0" ) {
+                        work[!is.na(work$INTENSITY) & work$INTENSITY == 1, 'censored'] <- TRUE
+                    }
+
 	            
 	            ## if censoredInt == '0, and cutoff is negative, still zero should becensored
 	            if ( cutoff.lower <= 0 & !is.null(censoredInt) & censoredInt == "0" ) {
