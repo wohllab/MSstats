@@ -2191,6 +2191,7 @@ dataProcess  <-  function(raw,
 
 	            work[!is.na(work$INTENSITY) & 
 	                     work$ABUNDANCE < cutoff.lower, 'censored'] <- TRUE
+
                     if ( !is.null(censoredInt) & censoredInt == "0" ) {
                         work[!is.na(work$INTENSITY) & work$INTENSITY == 1, 'censored'] <- TRUE
                     }
@@ -2258,6 +2259,7 @@ dataProcess  <-  function(raw,
 	            
 	            work[!is.na(work$INTENSITY) & 
 	                     work$ABUNDANCE < cutoff.lower, 'censored'] <- TRUE
+
                     if ( !is.null(censoredInt) & censoredInt == "0" ) {
                         work[!is.na(work$INTENSITY) & work$INTENSITY == 1, 'censored'] <- TRUE
                     }
